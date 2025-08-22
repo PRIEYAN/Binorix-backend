@@ -60,6 +60,7 @@ router.post('/signin', async (req, res) => {
         await newPatient.save();
 
         const token = jwt.sign({ name, PhoneNumber, email }, JWT_SECRET, { expiresIn: '1d' });
+        res.setHeader('Authorization', `Bearer ${token}`);
         return res.status(201).json({ message: "Patient registered successfully", token });
 
     } catch (error) {
@@ -90,6 +91,7 @@ router.post('/login', async (req, res) => {
         }
         
         const token = jwt.sign({ name: patient.name, PhoneNumber: patient.PhoneNumber, email: patient.email }, JWT_SECRET, { expiresIn: '1d' });
+        res.setHeader('Authorization', `Bearer ${token}`);
         return res.status(200).json({ message: "Login successful", token });
 
     } catch (error) {

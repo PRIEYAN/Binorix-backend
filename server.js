@@ -20,11 +20,12 @@ const hospitalCore = require('./hospital-services/hospitalCore.js');
 const pharmacyAuth = require('./pharmacy-services/pharmacyAuth.js');
 const pharmacyCore = require('./pharmacy-services/pharmacyCore.js');
 const patientAuth = require('./patient-services/patientAuth.js');
+const patientCore = require('./patient-services/patientCore.js');
 const jwt = require('./jwt/jwt.js');
 
 
 const app = express();
-app.use(cors());
+app.use(cors({ exposedHeaders: ['Authorization'] }));
 app.use(express.json());
 
 //doctor
@@ -41,6 +42,7 @@ app.use('/pharmacy/core', pharmacyCore);
 
 //patient
 app.use('/patient/auth', patientAuth);
+app.use('/patient/core', patientCore);
 
 //jwt
 app.use('/api/jwt', jwt);
@@ -93,6 +95,7 @@ http://localhost:5050/pharmacy/auth/login
 PATIENT ROUTES
 http://localhost:5050/patient/auth/signin
 http://localhost:5050/patient/auth/login
+http://localhost:5050/patient/core/prescriptionQR
 
 
 JWT ROUTES
