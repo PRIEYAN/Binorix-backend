@@ -16,6 +16,7 @@ const patientSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
     dob: { type: Date, required: true },
+    gender : { type: String, required: true },
     address: { type: String, required: true },
     otherDetails: { type: String } // optional
 }, { collection: "patientInfo" });

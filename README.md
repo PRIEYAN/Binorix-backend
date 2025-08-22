@@ -84,12 +84,8 @@ npm install
 
 ### 3️⃣ Create .env file
 ```env
-PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Binorix
 JWT_SECRET=your_jwt_secret
-BLOCKCHAIN_RPC_URL=your_blockchain_rpc_url
-PRIVATE_KEY=your_private_key
-CONTRACT_ADDRESS=your_contract_address
 ```
 
 ### 4️⃣ Run the development server

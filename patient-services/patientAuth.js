@@ -20,9 +20,9 @@ router.get('/',(req,res)=>{
 
 router.post('/signin', async (req, res) => {
     try {
-        let { name, PhoneNumber, email, password, dob, address, otherDetails } = req.body;
+        let { name, PhoneNumber, email, password, dob,gender, address, otherDetails } = req.body;
 
-        if (!name || !PhoneNumber || !email || !password || !dob || !address) {
+        if (!name || !PhoneNumber || !email || !password || !dob ||!gender|| !address) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -52,6 +52,7 @@ router.post('/signin', async (req, res) => {
             email,
             password: hashedPassword,
             dob,
+            gender,
             address,
             otherDetails: otherDetails || ''
         });
