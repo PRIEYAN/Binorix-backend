@@ -29,14 +29,18 @@ router.post('/getPrescriptionDetails', async (req, res) => {
             return res.status(400).json({message: "token is required"});
         }
         const decoded = jwt.verify(token, JWT_SECRET); // <-- use jwt here
-        if(!decoded || !decoded.PhoneNumber){
+        if(!decoded || !decoded.email){
             return res.status(400).json({message: "Invalid token"});
         }
-        const allPrescriptions = await Prescription.find({ "doctor.PhoneNumber": decoded.PhoneNumber });
+        const allPrescriptions = await Prescription.find({ "doctor.email": decoded.email });
         if(!allPrescriptions || allPrescriptions.length === 0){
             return res.status(200).json({message: "No prescriptions found for this doctor"});
         }
-        return res.status(200).json({message: "Prescriptions fetched successfully", prescriptions: allPrescriptions});
+        const processingPrescription = allPrescriptions.filter(prescription => prescription.status === 'processing');
+        if(processingPrescription.length > 0){
+            return res.status(200).json({message: "Prescriptions fetched successfully", prescriptions: processingPrescription} );
+        }
+        return res.status(200).json({message: "Prescriptions fetched successfully", prescriptions: processingPrescription});
     }catch(err){
         return res.status(500).json({message: "Internal server error", error: err.message});
     }   
@@ -49,15 +53,15 @@ router.post('/rejectPrescription', async (req, res) => {
             return res.status(400).json({message: "Token and prescriptionID are required"});
         }
         const decoded = jwt.verify(token, JWT_SECRET); // <-- use jwt here
-        if(!decoded || !decoded.PhoneNumber){
+        if(!decoded || !decoded.email){
             return res.status(400).json({message: "Invalid token"});
         }
-        const prescription = await Prescription.findOne({prescriptionID: prescriptionID, "doctor.PhoneNumber": decoded.PhoneNumber});
+        const prescription = await Prescription.findOne({prescriptionID: prescriptionID, "doctor.email": decoded.email});
         if(!prescription){
             return res.status(404).json({message: "Prescription not found"});
         }
         const rejectedPrescription = await Prescription.updateOne(
-            { prescriptionID: prescriptionID, "doctor.PhoneNumber": decoded.PhoneNumber },
+            { prescriptionID: prescriptionID, "doctor.email": decoded.email },
             { 
                 $set: { 
                     status: 'rejected',

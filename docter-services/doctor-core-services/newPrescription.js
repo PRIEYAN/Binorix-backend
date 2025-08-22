@@ -65,7 +65,7 @@ router.post('/newPrescription', async (req, res) => {
             doctorWallet,
             patientWallet,
             doctorName,
-            doctorPhoneNumber,
+            nmrNumber,
             doctorHospital,
             doctorSpecialization,
             doctorEmail,
@@ -81,7 +81,7 @@ router.post('/newPrescription', async (req, res) => {
             !doctorWallet ||
             !patientWallet ||
             !doctorName ||
-            !doctorPhoneNumber ||
+            !nmrNumber ||
             !doctorHospital ||
             !doctorSpecialization ||
             !doctorEmail ||
@@ -118,7 +118,7 @@ router.post('/newPrescription', async (req, res) => {
             patientWallet,
             doctor: {
                 name: doctorName,
-                nmrNumber: doctorPhoneNumber,
+                nmrNumber: nmrNumber,
                 specialization: doctorSpecialization,
                 hospitalName: doctorHospital,
                 hospital: doctorHospital,

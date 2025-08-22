@@ -26,7 +26,6 @@ const prescriptionSchema = new mongoose.Schema({
         specialization: { type: String, required: true },
         email: { type: String, required: true },
         hospitalName: { type: String, required: true },
-        hospital: { type: String, required: true }
     },
     patient: {
         name: { type: String, required: true },
