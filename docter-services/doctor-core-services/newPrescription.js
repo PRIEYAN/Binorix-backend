@@ -65,7 +65,7 @@ router.post('/newPrescription', async (req, res) => {
             doctorWallet,
             patientWallet,
             doctorName,
-            nmrNumber,
+            doctorPhoneNumber,
             doctorHospital,
             doctorSpecialization,
             doctorEmail,
@@ -77,23 +77,51 @@ router.post('/newPrescription', async (req, res) => {
             advice,
         } = req.body;
 
-        if (
-            !doctorWallet ||
-            !patientWallet ||
-            !doctorName ||
-            !nmrNumber ||
-            !doctorHospital ||
-            !doctorSpecialization ||
-            !doctorEmail ||
-            !patientName ||
-            !patientPhoneNumber ||
-            !patientEmail ||
-            !patientGender ||
-            !medicines ||
-            !Array.isArray(medicines) ||
-            medicines.length === 0
-        ) {
-            return res.status(400).json({ message: "All fields are required" });
+        // Debug: Log the received data
+        console.log("Received prescription data:", req.body);
+        
+        // Check each field individually and provide specific error messages
+        if (!doctorWallet) {
+            return res.status(400).json({ message: "doctorWallet is required" });
+        }
+        if (!patientWallet) {
+            return res.status(400).json({ message: "patientWallet is required" });
+        }
+        if (!doctorName) {
+            return res.status(400).json({ message: "doctorName is required" });
+        }
+        if (!doctorPhoneNumber) {
+            return res.status(400).json({ message: "doctorPhoneNumber is required" });
+        }
+        if (!doctorHospital) {
+            return res.status(400).json({ message: "doctorHospital is required" });
+        }
+        if (!doctorSpecialization) {
+            return res.status(400).json({ message: "doctorSpecialization is required" });
+        }
+        if (!doctorEmail) {
+            return res.status(400).json({ message: "doctorEmail is required" });
+        }
+        if (!patientName) {
+            return res.status(400).json({ message: "patientName is required" });
+        }
+        if (!patientPhoneNumber) {
+            return res.status(400).json({ message: "patientPhoneNumber is required" });
+        }
+        if (!patientEmail) {
+            return res.status(400).json({ message: "patientEmail is required" });
+        }
+        if (!patientGender) {
+            return res.status(400).json({ message: "patientGender is required" });
+        }
+        if (!medicines) {
+            return res.status(400).json({ message: "medicines is required" });
+        }
+        if (!Array.isArray(medicines)) {
+            return res.status(400).json({ message: "medicines must be an array" });
+        }
+        if (medicines.length === 0) {
+            return res.status(400).json({ message: "medicines array cannot be empty" });
         }
 
         // Validate medicines array structure
@@ -118,7 +146,7 @@ router.post('/newPrescription', async (req, res) => {
             patientWallet,
             doctor: {
                 name: doctorName,
-                nmrNumber: nmrNumber,
+                nmrNumber: doctorPhoneNumber,
                 specialization: doctorSpecialization,
                 hospitalName: doctorHospital,
                 hospital: doctorHospital,
