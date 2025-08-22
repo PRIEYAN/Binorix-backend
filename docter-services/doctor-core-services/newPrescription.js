@@ -62,49 +62,55 @@ router.post('/getPatientDetails', async (req, res) => {
 router.post('/newPrescription', async (req, res) => {
     try{
         const {
-    doctorWallet,
-    patientWallet,
-    doctorName,
-    doctorPhoneNumber,
-    doctorHospital,
-    patientName,
-    patientPhoneNumber,
-    patientDOB,
-    patientGender,
-    medicines,
-    advice,
-} = req.body;
+            doctorWallet,
+            patientWallet,
+            doctorName,
+            doctorPhoneNumber,
+            doctorHospital,
+            doctorSpecialization,
+            doctorEmail,
+            patientName,
+            patientPhoneNumber,
+            patientEmail,
+            patientGender,
+            medicines,
+            advice,
+        } = req.body;
 
-if (
-    !doctorWallet ||
-    !patientWallet ||
-    !doctorName ||
-    !doctorPhoneNumber ||
-    !doctorHospital ||
-    !patientName ||
-    !patientPhoneNumber ||
-    !patientDOB ||
-    !patientGender ||
-    !medicines ||
-    Object.keys(medicines).length === 0  
-) {
-    return res.status(400).json({ message: "All fields are required" });
-}
+        if (
+            !doctorWallet ||
+            !patientWallet ||
+            !doctorName ||
+            !doctorPhoneNumber ||
+            !doctorHospital ||
+            !doctorSpecialization ||
+            !doctorEmail ||
+            !patientName ||
+            !patientPhoneNumber ||
+            !patientEmail ||
+            !patientGender ||
+            !medicines ||
+            !Array.isArray(medicines) ||
+            medicines.length === 0
+        ) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
 
-for (const [medName, medDetails] of Object.entries(medicines)) {
-    if (
-        typeof medDetails.m === "undefined" ||
-        typeof medDetails.E === "undefined" ||
-        typeof medDetails.n === "undefined" ||
-        typeof medDetails.time === "undefined"
-    ) {
-        return res.status(400).json({ message: `Medicine '${medName}' is missing required schedule fields` });
-    }
-}
-
-
-
-        //web3..
+        // Validate medicines array structure
+        for (const medicine of medicines) {
+            if (
+                !medicine.name ||
+                !medicine.quantity ||
+                !medicine.timing ||
+                !medicine.foodIntake ||
+                !medicine.instructions ||
+                typeof medicine.timing.morning !== 'boolean' ||
+                typeof medicine.timing.afternoon !== 'boolean' ||
+                typeof medicine.timing.night !== 'boolean'
+            ) {
+                return res.status(400).json({ message: `Medicine '${medicine.name || 'unknown'}' is missing required fields` });
+            }
+        }
 
         //storing in db
         const newPrescription = new Prescription({
@@ -112,22 +118,23 @@ for (const [medName, medDetails] of Object.entries(medicines)) {
             patientWallet,
             doctor: {
                 name: doctorName,
-                PhoneNumber: doctorPhoneNumber,
-                hospital: doctorHospital
+                nmrNumber: doctorPhoneNumber,
+                specialization: doctorSpecialization,
+                hospitalName: doctorHospital,
+                hospital: doctorHospital,
+                email: doctorEmail
             },
             patient: {
                 name: patientName,
                 PhoneNumber: patientPhoneNumber,
-                dob: new Date(patientDOB),
+                email: patientEmail,
                 gender: patientGender
             },
             medicines: medicines,
             advice: advice || '',
-            QRImage : 'Nill',
-            status: 'pending',
+            status: 'processing',
         });
         await newPrescription.save();
-
 
         return res.status(201).json({message: "Prescription created successfully", prescription: newPrescription});
     }catch(err){
