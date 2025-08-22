@@ -46,33 +46,23 @@ router.post('/getPrescriptionDetails', async (req, res) => {
     }   
 });
 
-router.post('/rejectPrescription', async (req, res) => {
+router.post('/completedPrescription', async (req, res) => {
     try{
-        const {token, prescriptionID} = req.body;
-        if(!token || !prescriptionID){
-            return res.status(400).json({message: "Token and prescriptionID are required"});
+        const {token} = req.body;
+        if(!token ){
+            return res.status(400).json({message: "Token is required"});
         }
         const decoded = jwt.verify(token, JWT_SECRET); // <-- use jwt here
         if(!decoded || !decoded.email){
             return res.status(400).json({message: "Invalid token"});
         }
-        const prescription = await Prescription.findOne({prescriptionID: prescriptionID, "doctor.email": decoded.email});
-        if(!prescription){
-            return res.status(404).json({message: "Prescription not found"});
+        
+        const allPrescriptions = await Prescription.find({ "doctor.email": decoded.email });
+        if(!allPrescriptions || allPrescriptions.length === 0){
+            return res.status(200).json({message: "No prescriptions found for this doctor"});
         }
-        const rejectedPrescription = await Prescription.updateOne(
-            { prescriptionID: prescriptionID, "doctor.email": decoded.email },
-            { 
-                $set: { 
-                    status: 'rejected',
-                    UpdatedTime: new Date().toISOString()
-                } 
-            }
-        );
-        if(rejectedPrescription.modifiedCount === 0){
-            return res.status(400).json({message: "Failed to reject prescription"});
-        }
-        return res.status(200).json({message: "Prescription rejected successfully", prescription: rejectedPrescription});     
+        const completedPrescription = await allPrescriptions.filter(prescription => prescription.status === 'completed');
+        return res.status(200).json({message: "Prescription completed successfully", prescriptions: completedPrescription});     
     }catch(err){
         return res.status(500).json({message: "Internal server error", error: err.message});
     }

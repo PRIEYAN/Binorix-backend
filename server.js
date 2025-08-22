@@ -71,7 +71,7 @@ http://localhost:5050/doctor/prescription/getPatientDetails - to get check wheth
 http://localhost:5050/doctor/prescription/newPrescription - to create new prescription
 
 http://localhost:5050/doctor/prescription/getPrescriptionDetails - to get all prescription details of a doctor
-http://localhost:5050/doctor/prescription/rejectPrescription - to reject a prescription
+http://localhost:5050/doctor/prescription/completedPrescription - to reject a prescription
 
 http://localhost:5050/doctor/prescription/prescriptionRequest - to approve a prescription request
 
