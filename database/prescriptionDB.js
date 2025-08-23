@@ -46,7 +46,7 @@ const prescriptionSchema = new mongoose.Schema({
         instructions: { type: String, required: true }
     }],
     advice: { type: String },
-    status: { type: String, required: true }, // pending, fulfilled
+    status: { type: String, required: true }, // processing, completed
     CreatedDate: { type: Date, default: Date.now },
     updatedDate: { type: Date, default: Date.now }
 }, { collection: "prescriptionDetails" });
@@ -55,41 +55,3 @@ const Prescription = mongoose.model('prescriptionDetails', prescriptionSchema);
 module.exports = Prescription;
 
 
-/*{
-  "patient": {
-    "name": "John Doe",
-    "phoneNumber": "+91 9876543210",
-    "email": "john@example.com",
-    "gender": "Male",
-  },
-  "doctor": {
-    "name": "Dr. Smith",
-    "nmrNumber": "NMR12345",
-    "hospital": "City Hospital",
-    "specialization": "Cardiology",
-    "email": "doctor@hospital.com"
-  },
-  "medicines": [
-    {
-      "name": "Paracetamol",
-      "quantity": "10",
-      "timing": {
-        "morning": true,
-        "afternoon": false,
-        "night": true
-      },
-      "foodIntake": "After Food",
-      "instructions": "Take after food"
-    }
-  ],
-  "advice": "Doctor's advice and instructions",
-  "signature": {
-    "walletAddress": "0x1234...abcd",
-    "timestamp": "2024-01-15 14:30:00",
-    "signedMessage": "Complete signed message"
-  },
-  "status": "processing",
-  "prescriptionId": "RX123456",
-  "createdAt": "2024-01-15T14:30:00.000Z",
-  "updatedAt": "2024-01-15T14:30:00.000Z"
-} */

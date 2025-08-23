@@ -21,6 +21,8 @@ const pharmacyAuth = require('./pharmacy-services/pharmacyAuth.js');
 const pharmacyCore = require('./pharmacy-services/pharmacyCore.js');
 const patientAuth = require('./patient-services/patientAuth.js');
 const patientCore = require('./patient-services/patientCore.js');
+const patientEditDetails = require('./patient-services/patientEditDetails.js'); 
+
 const jwt = require('./jwt/jwt.js');
 
 
@@ -43,6 +45,7 @@ app.use('/pharmacy/core', pharmacyCore);
 //patient
 app.use('/patient/auth', patientAuth);
 app.use('/patient/core', patientCore);
+app.use('/patient/edit-details', patientEditDetails);
 
 //jwt
 app.use('/api/jwt', jwt);
@@ -96,8 +99,10 @@ PATIENT ROUTES
 http://localhost:5050/patient/auth/signin
 http://localhost:5050/patient/auth/login
 http://localhost:5050/patient/core/prescriptionQR
-
+http://localhost:5050/patient/edit-details
 
 JWT ROUTES
 http://localhost:5050/api/jwt/:ROLE
 */
+
+
