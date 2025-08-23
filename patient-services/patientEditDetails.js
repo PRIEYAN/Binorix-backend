@@ -19,8 +19,6 @@ router.get('/', (req, res) => {
 });
 
 // POST /patient/edit-details
-// Immutable fields: PhoneNumber, email, patientID (cannot be modified)
-// Mutable fields: name, dob, gender, address, otherDetails
 router.post('/', async (req, res) =>{
     try {
         // Get token from Authorization header
@@ -75,14 +73,6 @@ router.post('/', async (req, res) =>{
 
         await patient.save();
 
-        // Generate new token with updated info
-        const newToken = jwt.sign({ 
-            name: patient.name, 
-            PhoneNumber: patient.PhoneNumber, 
-            email: patient.email 
-        }, JWT_SECRET, { expiresIn: '7d' });
-
-        res.setHeader('Authorization', `Bearer ${newToken}`);
         res.status(200).json({ 
             message: "Patient details updated successfully", 
             patient: {
@@ -94,8 +84,7 @@ router.post('/', async (req, res) =>{
                 gender: patient.gender,
                 address: patient.address,
                 otherDetails: patient.otherDetails
-            },
-            token: newToken
+            }
         });
 
     } catch (error) {
@@ -105,5 +94,7 @@ router.post('/', async (req, res) =>{
 });
 
 module.exports = router;
+
+
 
 
