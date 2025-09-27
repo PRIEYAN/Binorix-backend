@@ -46,28 +46,6 @@ It provides secure APIs for managing doctors, hospitals, pharmacies, and patient
 
 ---
 
-## 📂 Project Structure
-
-```
-Binorix-backend/
-│
-├── doctor-services/
-│   ├── auth-services/
-│   └── doctor-core-services/
-│
-├── hospital-services/
-│
-├── pharmacy-services/
-│
-├── database/
-│
-├── .env
-├── server.js
-├── package.json
-└── README.md
-```
-
----
 
 ## ⚙️ Setup & Installation
 
@@ -95,19 +73,6 @@ npm start
 
 ---
 
-## 📡 API Endpoints
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `POST` | `/doctor/auth/register` | Register a doctor | ❌ |
-| `POST` | `/doctor/auth/login` | Doctor login | ❌ |
-| `POST` | `/hospital/auth/register` | Register a hospital | ❌ |
-| `POST` | `/hospital/auth/login` | Hospital login | ❌ |
-| `POST` | `/pharmacy/auth/register` | Register a pharmacy | ❌ |
-| `POST` | `/pharmacy/auth/login` | Pharmacy login | ❌ |
-| `POST` | `/doctor/prescription` | Create prescription | ✅ |
-| `GET` | `/doctor/prescription/:patientId` | Get prescriptions by patient | ✅ |
-| `GET` | `/patient/:id` | Get patient details | ✅ |
 
 *(More endpoints are documented in the code)*
 
@@ -177,22 +142,73 @@ It provides secure APIs for managing doctors, hospitals, pharmacies, and patient
 
 ## 📂 Project Structure
 
-Binorix-backend/
-│── doctor-services/
-│ ├── auth-services/
-│ └── doctor-core-services/
-│── hospital-services/
-│── pharmacy-services/
-│── database/
-│── .env
-│── server.js
-│── package.json
-
-yaml
-Copy
-Edit
-
 ---
+```bash
+Binorix-backend/
+├── src/
+│   ├── controllers/
+│   │   ├── doctor.authController.js
+│   │   ├── doctor.coreController.js
+│   │   ├── hospital.authController.js
+│   │   ├── hospital.coreController.js
+│   │   ├── patient.authController.js
+│   │   ├── patient.coreController.js
+│   │   ├── pharmacy.authController.js
+│   │   ├── pharmacy.coreController.js
+│   │   └── index.js
+│   ├── services/
+│   │   ├── doctor.services/
+│   │   │   ├── auth.services.js
+│   │   │   ├── core.services.js
+│   │   │   └── index.js
+│   │   ├── hospital.services/
+│   │   │   ├── auth.services.js
+│   │   │   ├── core.services.js
+│   │   │   └── index.js
+│   │   ├── patient.services/
+│   │   │   ├── auth.services.js
+│   │   │   ├── core.services.js
+│   │   │   └── index.js
+│   │   └── pharmacy.services/
+│   │       ├── auth.services.js
+│   │       ├── core.services.js
+│   │       └── index.js
+│   ├── models/
+│   │   ├── doctorDB.js
+│   │   ├── hospitalDB.js
+│   │   ├── patientDB.js
+│   │   ├── pharmacyDB.js
+│   │   ├── prescriptionDB.js
+│   │   ├── prescriptionQR-DB.js
+│   │   └── index.js
+│   ├── routes/
+│   │   ├── doctor.auth.routes.js
+│   │   ├── doctor.core.routes.js
+│   │   ├── hospital.auth.routes.js
+│   │   ├── hospital.core.routes.js
+│   │   ├── patient.auth.routes.js
+│   │   ├── patient.core.routes.js
+│   │   ├── patient.edit.routes.js
+│   │   ├── pharmacy.auth.routes.js
+│   │   ├── pharmacy.core.routes.js
+│   │   ├── jwt.routes.js
+│   │   └── index.js
+│   ├── middlewares/
+│   │   ├── auth.js
+│   │   └── index.js
+│   ├── utils/
+│   │   ├── jwt.js
+│   │   └── index.js
+│   ├── dbconfig/
+│   │   └── mongodb.js
+│   └── index.js
+├── .env
+├── server.js
+├── package.json
+├── README.md
+└── ARCHITECTURE_FLOWCHART.md
+---
+```
 
 ## ⚙️ Setup & Installation
 
@@ -218,16 +234,49 @@ Copy
 Edit
 npm start
 📡 API Endpoints
-Method	Endpoint	Description	Auth Required
-POST	/doctor/auth/register	Register a doctor	❌
-POST	/doctor/auth/login	Doctor login	❌
-POST	/hospital/auth/register	Register a hospital	❌
-POST	/hospital/auth/login	Hospital login	❌
-POST	/pharmacy/auth/register	Register a pharmacy	❌
-POST	/pharmacy/auth/login	Pharmacy login	❌
-POST	/doctor/prescription	Create prescription	✅
-GET	/doctor/prescription/:patientId	Get prescriptions by patient	✅
-GET	/patient/:id	Get patient details	✅
+
+
+DOCTOR ROUTES
+
+http://localhost:5050/doctor/auth/signin
+http://localhost:5050/doctor/auth/login
+http://localhost:5050/doctor/auth/getDoctorDetails
+http://localhost:5050/doctor/auth/logout
+
+
+http://localhost:5050/doctor/prescription/getPatientDetails - to get check whether the patient registered in app or not
+http://localhost:5050/doctor/prescription/newPrescription - to create new prescription
+
+http://localhost:5050/doctor/prescription/getPrescriptionDetails - to get all prescription details of a doctor
+http://localhost:5050/doctor/prescription/completedPrescription - to reject a prescription
+
+http://localhost:5050/doctor/prescription/prescriptionRequest - to approve a prescription request
+
+
+HOSPITAL ROUTES
+
+http://localhost:5050/hospital/auth/signin
+http://localhost:5050/hospital/auth/login
+http://localhost:5050/hospital/core/getDoctorDetails - to get all doctors of a hospital
+http://localhost:5050/hospital/core/viewPrescription/:doctorWallet - to view all prescriptions
+http://localhost:5050/hospital/auth/getHospital - to get all hospitals
+
+
+
+PHARMACY ROUTES
+http://localhost:5050/pharmacy/auth/signin
+http://localhost:5050/pharmacy/auth/login
+
+
+
+PATIENT ROUTES
+http://localhost:5050/patient/auth/signin
+http://localhost:5050/patient/auth/login
+http://localhost:5050/patient/core/prescriptionQR
+http://localhost:5050/patient/edit-details
+
+JWT ROUTES
+http://localhost:5050/api/jwt/:ROLE
 
 (More endpoints are documented in the code)
 
