@@ -1,65 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
-
-// Connect to MongoDB once at the application level
-const mongoURL = process.env.MONGOURL;
-mongoose.connect(mongoURL)
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-        console.error("MongoDB connection error:", err);
-    });
-
-const doctorAuth = require('./docter-services/auth-services/doctorAuth.js');
-const prescription = require('./docter-services/doctor-core-services/prescription.js');
-const hospitalAuth = require('./hospital-services/hospitalAuth.js');
-const hospitalCore = require('./hospital-services/hospitalCore.js');
-const pharmacyAuth = require('./pharmacy-services/pharmacyAuth.js');
-const pharmacyCore = require('./pharmacy-services/pharmacyCore.js');
-const patientAuth = require('./patient-services/patientAuth.js');
-const patientCore = require('./patient-services/patientCore.js');
-const patientEditDetails = require('./patient-services/patientEditDetails.js'); 
-
-const jwt = require('./jwt/jwt.js');
-
-
-const app = express();
-app.use(cors({ exposedHeaders: ['Authorization'] }));
-app.use(express.json());
-
-//doctor
-app.use('/doctor/auth', doctorAuth);
-app.use('/doctor/prescription',prescription);
-
-//hospital
-app.use('/hospital/auth', hospitalAuth);
-app.use('/hospital/core', hospitalCore);
-
-//pharmacy
-app.use('/pharmacy/auth', pharmacyAuth);
-app.use('/pharmacy/core', pharmacyCore);
-
-//patient
-app.use('/patient/auth', patientAuth);
-app.use('/patient/core', patientCore);
-app.use('/patient/edit-details', patientEditDetails);
-
-//jwt
-app.use('/api/jwt', jwt);
-
-
-app.get('/', (req, res) => {
-    return res.status(200).json({ message: "App running" });
-});
+// Main Server Entry Point
+const app = require('./src');
 
 const PORT = 5050;
-app.listen(PORT,'0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
 
 /*
 DOCTOR ROUTES
