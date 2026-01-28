@@ -1,0 +1,41 @@
+
+1/1
+Next.js 15.3.3 (outdated)Turbopack
+Runtime Error
+
+WagmiProviderNotFoundError: `useConfig` must be used within `WagmiProvider`.
+
+Docs: https://wagmi.sh/react/api/WagmiProvider.html
+Version: wagmi@2.16.1
+
+src/app/(Doctors)/doc/components/dashboard/PrescriptionTable.tsx (76:45) @ PrescriptionTable
+
+  74 |
+  75 |   const tableRef = useRef<HTMLDivElement>(null);
+> 76 |   const { isConnected, address } = useAccount();
+     |                                             ^
+  77 |   const { signMessageAsync } = useSignMessage();
+  78 |
+  79 |   useEffect(() => {
+
+Call Stack 8
+Show 1 ignore-listed frame(s)
+BaseError
+file:/home/prieyan/weeb/zyhper/Binorix/.next/static/chunks/node_modules_%40wagmi_core_dist_esm_5d5aad0a._.js (340:9)
+BaseError
+file:/home/prieyan/weeb/zyhper/Binorix/.next/static/chunks/node_modules_wagmi_dist_esm_45d652a4._.js (189:9)
+WagmiProviderNotFoundError
+file:/home/prieyan/weeb/zyhper/Binorix/.next/static/chunks/node_modules_wagmi_dist_esm_45d652a4._.js (217:9)
+useConfig
+file:/home/prieyan/weeb/zyhper/Binorix/.next/static/chunks/node_modules_wagmi_dist_esm_45d652a4._.js (247:24)
+useAccount
+file:/home/prieyan/weeb/zyhper/Binorix/.next/static/chunks/node_modules_wagmi_dist_esm_45d652a4._.js (334:195)
+PrescriptionTable
+src/app/(Doctors)/doc/components/dashboard/PrescriptionTable.tsx (76:45)
+MobileNumberSearch
+src/app/(Doctors)/doc/components/addprescription/page.tsx (41:6)
+1
+2
+
+Was this helpful?
+Application error: a client-side exception has occurred while loading localhost (see the browser console for more information).

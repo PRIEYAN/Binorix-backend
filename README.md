@@ -1,10 +1,10 @@
-# Binorix Backend
+# Zypher Backend
 
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2016.0.0-brightgreen.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-Binorix Backend is the core server-side application powering the **Binorix** healthcare management platform.  
+Zypher Backend is the core server-side application powering the **Zypher** healthcare management platform.  
 It provides secure APIs for managing doctors, hospitals, pharmacies, and patients, including blockchain-based prescription storage for enhanced security and transparency.
 
 ## 🚀 Features
@@ -51,8 +51,8 @@ It provides secure APIs for managing doctors, hospitals, pharmacies, and patient
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/PRIEYAN/Binorix-backend.git
-cd Binorix-backend
+git clone https://github.com/PRIEYAN/Zypher-backend.git
+cd Zypher-backend
 ```
 
 ### 2️⃣ Install dependencies
@@ -62,7 +62,7 @@ npm install
 
 ### 3️⃣ Create .env file
 ```env
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Binorix
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Zypher
 JWT_SECRET=your_jwt_secret
 ```
 
@@ -96,9 +96,9 @@ This project is licensed under the MIT License.
 
 Contributions are welcome!
 
-1. Fork the repository# Binorix Backend
+1. Fork the repository# Zypher Backend
 
-Binorix Backend is the core server-side application powering the **Binorix** healthcare management platform.  
+Zypher Backend is the core server-side application powering the **Zypher** healthcare management platform.  
 It provides secure APIs for managing doctors, hospitals, pharmacies, and patients, including blockchain-based prescription storage for enhanced security and transparency.
 
 ## 🚀 Features
@@ -144,7 +144,7 @@ It provides secure APIs for managing doctors, hospitals, pharmacies, and patient
 
 ---
 ```bash
-Binorix-backend/
+Zypher-backend/
 ├── src/
 │   ├── controllers/
 │   │   ├── doctor.authController.js
@@ -214,8 +214,8 @@ Binorix-backend/
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/PRIEYAN/Binorix-backend.git
-cd Binorix-backend
+git clone https://github.com/PRIEYAN/Zypher-backend.git
+cd Zypher-backend
 2️⃣ Install dependencies
 bash
 Copy
@@ -226,7 +226,7 @@ env
 Copy
 Edit
 PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Binorix
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Zypher
 JWT_SECRET=your_jwt_secret
 4️⃣ Run the development server
 bash
