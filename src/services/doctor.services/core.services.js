@@ -156,6 +156,41 @@ const doctorCoreService = {
         await prescription.save();
 
         return { message: "Prescription request approved successfully", prescription };
+    },
+
+    async getPrescription(patientPhoneNumber, jwtTokenData) {
+        if (!patientPhoneNumber) {
+            throw new Error("Patient phone number is required");
+        }
+
+        if (!jwtTokenData || !jwtTokenData.PhoneNumber) {
+            throw new Error("Invalid JWT token - patient phone number not found");
+        }
+
+        // Get patient ID from JWT token by looking up patient using PhoneNumber from token
+        const patientFromToken = await Patient.findOne({ PhoneNumber: jwtTokenData.PhoneNumber });
+        if (!patientFromToken) {
+            throw new Error("Patient not found in token");
+        }
+
+        const patientID = patientFromToken.patientID;
+
+        // Get patient details using the mobile number from request
+        const patient = await Patient.findOne({ PhoneNumber: patientPhoneNumber });
+        if (!patient) {
+            throw new Error("Patient not found with the provided phone number");
+        }
+
+        // Get prescriptions for this patient using patientWallet (assuming it's the patientID or PhoneNumber)
+        // Check prescription schema - it uses patientWallet, so we need to find by patient.PhoneNumber
+        const prescriptions = await Prescription.find({ 'patient.PhoneNumber': patientPhoneNumber });
+
+        return {
+            message: "Patient details and prescriptions fetched successfully",
+            patientID: patientID,
+            patient: patient,
+            prescriptions: prescriptions
+        };
     }
 };
 

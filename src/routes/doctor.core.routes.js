@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const doctorCoreController = require('../controllers/doctor.coreController');
+const { authenticateToken } = require('../middlewares/auth');
 
 // Doctor Core Routes
 router.get('/', (req, res) => {
@@ -13,5 +14,6 @@ router.post('/newPrescription/uploadImage', doctorCoreController.uploadPrescript
 router.get('/getPrescriptionDetails/:doctorWallet', doctorCoreController.getPrescriptionDetails);
 router.post('/completedPrescription', doctorCoreController.completePrescription);
 router.post('/prescriptionRequest', doctorCoreController.approvePrescriptionRequest);
+router.post('/getPrescription', authenticateToken, doctorCoreController.getPrescription);
 
 module.exports = router;

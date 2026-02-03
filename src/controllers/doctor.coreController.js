@@ -58,6 +58,17 @@ const doctorCoreController = {
         } catch (error) {
             return res.status(400).json({ message: error.message });
         }
+    },
+
+    async getPrescription(req, res) {
+        try {
+            const { PhoneNumber } = req.body;
+            const jwtTokenData = req.user; // Patient data from JWT token
+            const result = await doctorCoreService.getPrescription(PhoneNumber, jwtTokenData);
+            return res.status(200).json(result);
+        } catch (error) {
+            return res.status(404).json({ message: error.message });
+        }
     }
 };
 
